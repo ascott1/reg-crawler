@@ -19,7 +19,9 @@ hrefs = page.css(".cfr-download-links a:contains('Text')").map{ |a|
 
 hrefs.each do |href|
     remote_url =  href
-    local_fname = "#{DATA_DIR}/#{File.basename(href)}.txt"
+    simple_fname = File.basename(href)
+    simple_fname = (["CFR"] + simple_fname.split(".")[0].split("-").slice(2, 2)).join("-") + ".txt"
+    local_fname = "#{DATA_DIR}/#{simple_fname}"
     unless File.exists?(local_fname)
       puts "Fetching #{remote_url}..."
       begin
